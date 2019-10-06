@@ -15,7 +15,7 @@ export default class AllUser extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://ketemubackend.herokuapp.com/user')
+        fetch('https://rozibackend.herokuapp.com/user')
             .then(response => response.json())
             .then(data => {
                 this.setState(state => ({

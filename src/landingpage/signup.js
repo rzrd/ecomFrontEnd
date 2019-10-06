@@ -40,7 +40,7 @@ export default class SignUp extends React.Component {
     })
   }
   AddNewUser() {
-    fetch('https://ketemubackend.herokuapp.com/user/',
+    fetch('https://rozibackend.herokuapp.com/user/',
       {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin

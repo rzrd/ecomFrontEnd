@@ -25,7 +25,7 @@ export default withRouter(class ShowProduct extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`https://ketemubackend.herokuapp.com/product/${this.props.match.params.id}`)
+    fetch(`https://rozibackend.herokuapp.com/product/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(data => {
         if (data.data.reviews !== undefined) {
@@ -48,7 +48,7 @@ export default withRouter(class ShowProduct extends React.Component {
   }
 
   deleteProduct() {
-    fetch(`https://ketemubackend.herokuapp.com/product/${this.props.match.params.id}`,
+    fetch(`https://rozibackend.herokuapp.com/product/${this.props.match.params.id}`,
       {
         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin
@@ -68,7 +68,7 @@ export default withRouter(class ShowProduct extends React.Component {
   }
 
   addNewReview() {
-    fetch(`https://ketemubackend.herokuapp.com/review?productId=${this.state.id}`,
+    fetch(`https://rozibackend.herokuapp.com/review?productId=${this.state.id}`,
       {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin

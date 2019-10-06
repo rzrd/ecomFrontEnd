@@ -19,7 +19,7 @@ export default withRouter(class ShowProduct extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`https://ketemubackend.herokuapp.com/review/${this.props.match.params.id}`)
+        fetch(`https://rozibackend.herokuapp.com/review/${this.props.match.params.id}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success === true) {
@@ -39,7 +39,7 @@ export default withRouter(class ShowProduct extends React.Component {
     }
 
     deleteReview() {
-        fetch(`https://ketemubackend.herokuapp.com/review/${this.props.match.params.id}`,
+        fetch(`https://rozibackend.herokuapp.com/review/${this.props.match.params.id}`,
             {
                 method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, cors, *same-origin

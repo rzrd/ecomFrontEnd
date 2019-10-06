@@ -25,7 +25,7 @@ export default withRouter(class Header extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`https://ketemubackend.herokuapp.com/user/${localStorage.getItem('user')}`)
+    fetch(`https://rozibackend.herokuapp.com/user/${localStorage.getItem('user')}`)
       .then(response => response.json())
       .then(data => {
         this.setState((state) => ({

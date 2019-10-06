@@ -15,7 +15,7 @@ export default class LandingPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://ketemubackend.herokuapp.com/product')
+        fetch('https://rozibackend.herokuapp.com/product')
             .then(response => response.json())
             .then(data => {
                 this.setState(state => ({

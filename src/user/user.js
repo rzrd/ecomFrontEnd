@@ -42,7 +42,7 @@ export default class ShowUser extends React.Component {
   }
 
   AddNewProduct() {
-    fetch('https://ketemubackend.herokuapp.com/product/',
+    fetch('https://rozibackend.herokuapp.com/product/',
       {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin
@@ -73,7 +73,7 @@ export default class ShowUser extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`https://ketemubackend.herokuapp.com/user/${this.props.match.params.id}`)
+    fetch(`https://rozibackend.herokuapp.com/user/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(data => {
         this.setState((state) => ({

@@ -28,7 +28,7 @@ export default class Login extends React.Component {
   }
   
   UserLogin() {
-    fetch('https://ketemubackend.herokuapp.com/user/login',
+    fetch('https://rozibackend.herokuapp.com/user/login',
       {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin
