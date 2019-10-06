@@ -8,6 +8,8 @@ import AllUser from './user/alluser'
 import LandingPage from './landingpage';
 import ShowProduct from './product/product';
 import EditProduct from './product/editProduct';
+import EditUser from './user/editUser';
+import Review from './product/review'
 
 
 function App() {
@@ -23,6 +25,9 @@ function App() {
         <Route exact path='/product' component={LandingPage}></Route>
         <Route exact path='/product/:id' component={ShowProduct}></Route>
         <Route exact path='/productEdit/:id' component={EditProduct}></Route>
+        <Route exact path='/userEdit/:id' component={EditUser}></Route>
+        <Route exact path='/reviewDetail/:id' component={Review}></Route>
+
 
 
       </Router>

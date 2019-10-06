@@ -128,35 +128,49 @@ export default withRouter(class ShowProduct extends React.Component {
         <div>{this.state.message} atau sudah terhapus</div>
     }
 
+    var showReviewMssg
+    if (localStorage.getItem('isLoggedIn') && this.state.success === true) {
+      showReviewMssg =
+        <Form style={{ width: '50vh', margin: 'auto', padding: '10px' }}>
+          <FormGroup>
+            <Label>Berikan Review Mu...</Label>
+            <Input type="textarea" onChange={this.onChangeReview} name="text" placeholder='isi reviewmu disini, min 10 char' />
+          </FormGroup>
+          <Button onClick={this.addNewReview}>Submit Review</Button>
+        </Form>
+    } else {
+      if (this.state.success === false) {
+        showReviewMssg =
+          <div style={{ width: '50vh', margin: 'auto', padding: '10px' }}>id product tak ditemukan, produk telah terhapus</div>
+      } else {
+        showReviewMssg =
+          <div style={{ width: '50vh', margin: 'auto', padding: '10px' }}>sign up dan atau login untuk membuat review</div>
+      }
+    }
+
     return (
       <div>
         {showMessage}
         <div>
-          <Form style={{ width: '50vh', margin: 'auto', padding: '10px' }}>
-            <FormGroup>
-              <Label>Berikan Review Mu...</Label>
-              <Input type="textarea" onChange={this.onChangeReview} name="text" placeholder='isi reviewmu disini' />
-            </FormGroup>
-            <Button onClick={this.addNewReview}>Submit Review</Button>
-          </Form>
+          {showReviewMssg}
         </div>
         <div>
-        {this.state.productReview.map(productRev => {
-        return (
-          <Alert color="dark" style={{ width: '100vh', margin: 'auto' }}>
-            <Media left middle href="#">
-              <Media object data-src="" alt="foto user" />
-            </Media>
-            <Media body>
-              <Media heading>
-                Middle aligned media
-              </Media>
-              {productRev.text}
-            </Media>
-            <Button>Delete Review</Button>
-          </Alert>
-          )
-        })}
+          {this.state.productReview.map(productRev => {
+            return (
+              <Alert color="dark" style={{ width: '100vh', margin: 'auto' }} key={productRev._id}>
+                <Media left middle href={`/user/${productRev.author._id}`}>
+                  <Media object src={productRev.author.image ? productRev.author.image : 'https://pbs.twimg.com/profile_images/1164752786992484354/PyFcqmzG_400x400.jpg'} style={{ width: '50pt' }} alt="foto user" />
+                </Media>
+                <Media body>
+                  <Media heading>
+                    {productRev.author.username}
+                  </Media>
+                  {productRev.text}
+                </Media>
+                <Link to={`/reviewDetail/${productRev._id}`}><Button>See Review</Button></Link>
+              </Alert>
+            )
+          })}
         </div>
       </div>
     );

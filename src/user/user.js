@@ -27,7 +27,7 @@ export default class ShowUser extends React.Component {
     this.onChangeProductName = this.onChangeProductName.bind(this)
     this.onChangeProductPrice = this.onChangeProductPrice.bind(this)
     this.AddNewProduct = this.AddNewProduct.bind(this)
-    this.handleUploadImages= this.handleUploadImages.bind(this)
+    this.handleUploadImages = this.handleUploadImages.bind(this)
   }
 
   onChangeProductName(event) {
@@ -67,7 +67,7 @@ export default class ShowUser extends React.Component {
           redirect: true
         })
       })
-      .then(()=>{
+      .then(() => {
         window.location.reload()
       })
   }
@@ -118,7 +118,7 @@ export default class ShowUser extends React.Component {
     // We would use axios `.all()` method to perform concurrent image upload to cloudinary.
     axios.all(uploads).then(gambar => {
       // ... do anything after successful upload. You can setState() or save the data
-      console.log('Images have all being uploaded')     
+      console.log('Images have all being uploaded')
     });
   }
 
@@ -158,7 +158,7 @@ export default class ShowUser extends React.Component {
             <Row>
               <Col sm="4">
                 <Card body>
-                  <CardImg top width="100%" src={this.state.user.image ? this.state.user.image : `https://ui-avatars.com/api/?name=${this.state.user.username}`} alt={this.state.user.username} />
+                  <CardImg top width="100%" src={this.state.user.image ? this.state.user.image : `https://pbs.twimg.com/profile_images/1164752786992484354/PyFcqmzG_400x400.jpg`} alt={this.state.user.username} />
                   <CardBody>
                     <h4><CardTitle>{this.state.user.username}</CardTitle></h4>
                     <CardSubtitle>{this.state.user.email}</CardSubtitle>
@@ -195,8 +195,8 @@ export default class ShowUser extends React.Component {
               <Button onClick={this.AddNewProduct}>Add Product</Button>
             </Form>
 
-                    
-            <h2 style={{ textAlign: 'center' }}>All Product</h2>
+
+            <h2 style={{ textAlign: 'center' }}>{this.state.user.username}'s Product</h2>
             <CardColumns style={{ width: '1000px', margin: 'auto' }}>
               {this.state.userProduct.map(showProducts => {
                 return (
@@ -212,9 +212,7 @@ export default class ShowUser extends React.Component {
                 )
               })}
             </CardColumns>
-            
           </TabPane>
-
 
           <TabPane tabId="3">
             <Row>

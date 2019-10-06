@@ -72,7 +72,7 @@ export default class Login extends React.Component {
             <Input type="password" onChange={this.onChangePassword} name="password" id="password" placeholder="Passwordnya?" invalid />
             <FormFeedback>Oh noes! password is wrong</FormFeedback>
           </FormGroup>
-          <Link to='/'><Button onClick={this.UserLogin}>Sign Up</Button></Link>
+          <Link to='/'><Button onClick={this.UserLogin}>Log In</Button></Link>
           <FormText>Belum punya akun? daftar disini..</FormText>
           <Link to='/signup'><Button>Sign Up</Button></Link>
         </Form>

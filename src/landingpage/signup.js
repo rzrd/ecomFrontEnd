@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Link, Redirect } from "react-router-dom";
+import Dropzone from 'react-dropzone'
+import axios from 'axios'
+
+var dropzoneRef = createRef()
 
 
 export default class SignUp extends React.Component {
@@ -11,12 +15,14 @@ export default class SignUp extends React.Component {
       password: '',
       email: '',
       image: '',
+      src: 'https://image.flaticon.com/icons/png/512/3/3901.png',
       redirect: false
     }
     this.onChangeUsername = this.onChangeUsername.bind(this)
     this.onChangePassword = this.onChangePassword.bind(this)
     this.onChangeEmail = this.onChangeEmail.bind(this)
     this.AddNewUser = this.AddNewUser.bind(this)
+    this.handleUploadImages = this.handleUploadImages.bind(this)
   }
   onChangeUsername(event) {
     this.setState({
@@ -49,7 +55,8 @@ export default class SignUp extends React.Component {
         body: JSON.stringify({
           username: this.state.username,
           password: this.state.password,
-          email: this.state.email
+          email: this.state.email,
+          image: this.state.image
         }),
       })
       .then(response => response.json())
@@ -58,6 +65,36 @@ export default class SignUp extends React.Component {
           redirect: true
         })
       })
+  }
+
+  // This function does the uploading to cloudinary
+  handleUploadImages = images => {
+    // uploads is an array that would hold all the post methods for each image to be uploaded, then we'd use axios.all()
+    const uploads = images.map(image => {
+      // our formdata
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("tags", 'userImage'); // Add tags for the images - {Array}
+      formData.append("upload_preset", "ardwork"); // Replace the preset name with your own
+      formData.append("api_key", "851178384963432"); // Replace API key with your own Cloudinary API key
+      formData.append("timestamp", (Date.now() / 1000) | 0);
+      // Replace cloudinary upload URL with yours
+      return axios.post(
+        "https://api.cloudinary.com/v1_1/ardworkpict/image/upload",
+        formData,
+        { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then(gambar => {
+          this.setState({
+            image: gambar.data.secure_url,
+            src: gambar.data.secure_url
+          })
+        })
+    });
+    // We would use axios `.all()` method to perform concurrent image upload to cloudinary.
+    axios.all(uploads).then(gambar => {
+      // ... do anything after successful upload. You can setState() or save the data
+      console.log('Images have all being uploaded')     
+    });
   }
 
   render() {
@@ -82,12 +119,16 @@ export default class SignUp extends React.Component {
         </FormGroup>
         <FormGroup>
           <Label>Photo Profile</Label>
-          <Input type="file" />
-          <FormText color="muted">
-            untuk photo profile belum dibuat logic dan uploadernya !!!
-          </FormText>
+          <Dropzone ref={dropzoneRef} onDrop={this.handleUploadImages}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <img style={{ width: 100 }} src={this.state.src} alt="" srcSet="" />
+                    </div>
+                  )}
+                </Dropzone>
         </FormGroup>
-        <Link to='/user'><Button onClick={this.AddNewUser}>Sign Up</Button></Link>
+        <Link to='/login'><Button onClick={this.AddNewUser}>Sign Up</Button></Link>
         <FormText>Sudah punya akun? masuk disini..</FormText>
         <Link to='/login'><Button>Log In</Button></Link>
       </Form>

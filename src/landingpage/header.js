@@ -3,17 +3,19 @@ import {
   Collapse, Navbar, NavbarToggler,
   NavbarBrand, Nav, NavItem,
   NavLink, UncontrolledDropdown, DropdownToggle,
-  DropdownMenu, DropdownItem} from 'reactstrap';
+  DropdownMenu, DropdownItem
+} from 'reactstrap';
 import { Link, withRouter } from "react-router-dom";
 
 
-export default withRouter (class Header extends React.Component {
+export default withRouter(class Header extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
+      user: ''
     }
   }
   toggle() {
@@ -22,13 +24,45 @@ export default withRouter (class Header extends React.Component {
     });
   }
 
-  logout(){
+  componentDidMount() {
+    fetch(`https://ketemubackend.herokuapp.com/user/${localStorage.getItem('user')}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState((state) => ({
+          user: data.data.username
+        }))
+      })
+  }
+
+  logout() {
     localStorage.removeItem('isLoggedIn')
     localStorage.removeItem('token')
     localStorage.removeItem('user')
   }
 
   render() {
+    var tombol
+    if (localStorage.getItem('isLoggedIn')) {
+      tombol =
+        <NavItem>welcome, </NavItem>
+    } else {
+      tombol =
+          <NavItem>
+            <NavLink href={localStorage.getItem('isLoggedIn') ? `/user/${localStorage.getItem('user')}` : '/login'}>Login</NavLink>
+          </NavItem>
+    }
+
+    var tombol2
+    if (localStorage.getItem('isLoggedIn')) {
+      tombol2 =
+        <NavItem>{this.state.user}</NavItem>
+    } else {
+      tombol2 =
+          <NavItem>
+            <NavLink href={localStorage.getItem('isLoggedIn') ? `/user/${localStorage.getItem('user')}` : '/signUp'}>Sign Up</NavLink>
+          </NavItem>
+    }
+
     return (
       <div>
         <Navbar color="light" light expand="md">
@@ -36,12 +70,8 @@ export default withRouter (class Header extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href={localStorage.getItem('isLoggedIn') ? `/user/${localStorage.getItem('user')}`:'/login'}>Login</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href={localStorage.getItem('isLoggedIn') ? `/user/${localStorage.getItem('user')}`:'/signUp'}>Sign Up</NavLink>
-              </NavItem>
+              {tombol}
+              {tombol2}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Account
@@ -59,7 +89,7 @@ export default withRouter (class Header extends React.Component {
 
                   <DropdownItem divider />
                   <DropdownItem>
-                  <Link to='/' onClick={this.logout}>LogOut</Link>
+                    <Link to='/' onClick={this.logout}>LogOut</Link>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

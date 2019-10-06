@@ -33,7 +33,7 @@ export default class AllUser extends React.Component {
                     {this.state.users.map(showuser =>{
                         return(
                     <Card body key={showuser._id}>
-                        <CardImg top width="100%" src={showuser.image ? showuser.image : `https://ui-avatars.com/api/?name=${showuser.username}`} alt={showuser.username} />
+                        <CardImg top width="100%" src={showuser.image ? showuser.image : `https://pbs.twimg.com/profile_images/1164752786992484354/PyFcqmzG_400x400.jpg`} alt={showuser.username} />
                         <CardBody>
                             <h4><CardTitle>{showuser.username}</CardTitle></h4>
                             <CardSubtitle>{showuser.email}</CardSubtitle>
