@@ -20,14 +20,14 @@ export default class EditUser extends React.Component {
             paramsId: this.props.match.params.id
         }
         this.editUser = this.editUser.bind(this)
-        this.onChangeUsername = this.onChangeUsername.bind(this)
-        this.onChangePassword = this.onChangePassword.bind(this)
-        this.onChangeEmail = this.onChangeEmail.bind(this)
+        this.onEditUsername = this.onEditUsername.bind(this)
+        this.onEditPassword = this.onEditPassword.bind(this)
+        this.onEditEmail = this.onEditEmail.bind(this)
         this.handleUploadImages = this.handleUploadImages.bind(this)
     }
 
     editUser() {
-        fetch(`https://rozibackend.herokuapp.com/user/${this.state.paramsId}`,
+        fetch(`https://rozibackend.herokuapp.com/user/${this.props.match.params.id}`,
             {
                 method: 'PUT', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, cors, *same-origin
@@ -53,17 +53,17 @@ export default class EditUser extends React.Component {
             })
     }
 
-    onChangeUsername(event) {
+    onEditUsername(event) {
         this.setState({
             username: event.target.value
         })
     }
-    onChangePassword(event) {
+    onEditPassword(event) {
         this.setState({
             password: event.target.value
         })
     }
-    onChangeEmail(event) {
+    onEditEmail(event) {
         this.setState({
             email: event.target.value
         })
@@ -83,7 +83,6 @@ export default class EditUser extends React.Component {
             })
     }
 
-    // This function does the uploading to cloudinary
     handleUploadImages = images => {
         // uploads is an array that would hold all the post methods for each image to be uploaded, then we'd use axios.all()
         const uploads = images.map(image => {
@@ -114,22 +113,19 @@ export default class EditUser extends React.Component {
     }
 
     render() {
-        console.log(this.state.email)
-        console.log(this.state.image)
-        console.log(this.state.paramsId)
         return (
             <Form style={{ width: '40vw', margin: 'auto' }}>
                 <FormGroup>
                     <Label>Username</Label>
-                    <Input type="text" onChange={this.onChangeUsername} value={this.state.username} placeholder="usernamenya apa" />
+                    <Input type="text" onChange={this.onEditUsername} value={this.state.username} placeholder="usernamenya apa" />
                 </FormGroup>
                 <FormGroup>
                     <Label>Email</Label>
-                    <Input type="email" onChange={this.onChangeEmail} value={this.state.email} placeholder="emailnya" />
+                    <Input type="email" onChange={this.onEditEmail} value={this.state.email} placeholder="emailnya" />
                 </FormGroup>
                 <FormGroup>
                     <Label>Password</Label>
-                    <Input type="password" onChange={this.onChangePassword} placeholder="jangan disebar passnya" />
+                    <Input type="password" onChange={this.onEditPassword} placeholder="jangan disebar passnya" />
                 </FormGroup>
                 <FormGroup>
                     <Label>Photo Profile</Label>

@@ -26,7 +26,7 @@ export default class Login extends React.Component {
       password: event.target.value
     })
   }
-  
+
   UserLogin() {
     fetch('https://rozibackend.herokuapp.com/user/login',
       {
@@ -47,10 +47,14 @@ export default class Login extends React.Component {
       })
       .then(response => response.json())
       .then(data => {
-        localStorage.setItem('isLoggedIn', true)
-        localStorage.setItem('token', data.data.token)
-        localStorage.setItem('user', data.data.userId)
-        this.props.history.push('/')
+        if (data.data.token) {
+          localStorage.setItem('isLoggedIn', true)
+          localStorage.setItem('token', data.data.token)
+          localStorage.setItem('user', data.data.userId)
+          this.props.history.push('/')
+        } else {
+          this.props.history.push('/login')
+        }
       })
   }
 
@@ -60,22 +64,22 @@ export default class Login extends React.Component {
         <Redirect to='/'></Redirect>
       )
     }
-      return (
-        <Form style={{ width: '30vw', margin: 'auto' }}>
-          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-            <Label for="username" className="mr-sm-2">Username</Label>
-            <Input type="text" onChange={this.onChangeUsername} name="username" id="username" placeholder="Your Username Please!" invalid />
-            <FormFeedback>Oh noes! username is not registered</FormFeedback>
-          </FormGroup>
-          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-            <Label for="password" className="mr-sm-2">Password</Label>
-            <Input type="password" onChange={this.onChangePassword} name="password" id="password" placeholder="Passwordnya?" invalid />
-            <FormFeedback>Oh noes! password is wrong</FormFeedback>
-          </FormGroup>
-          <Link to='/'><Button onClick={this.UserLogin}>Log In</Button></Link>
-          <FormText>Belum punya akun? daftar disini..</FormText>
-          <Link to='/signup'><Button>Sign Up</Button></Link>
-        </Form>
-      );
-    }
+    return (
+      <Form style={{ width: '30vw', margin: 'auto' }}>
+        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <Label for="username" className="mr-sm-2">Username</Label>
+          <Input type="text" onChange={this.onChangeUsername} name="username" id="username" placeholder="Your Username Please!" invalid />
+          <FormFeedback>Oh noes! username is not registered</FormFeedback>
+        </FormGroup>
+        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <Label for="password" className="mr-sm-2">Password</Label>
+          <Input type="password" onChange={this.onChangePassword} name="password" id="password" placeholder="Passwordnya?" invalid />
+          <FormFeedback>Oh noes! password is wrong</FormFeedback>
+        </FormGroup>
+        <Link to='/'><Button onClick={this.UserLogin}>Log In</Button></Link>
+        <FormText>Belum punya akun? daftar disini..</FormText>
+        <Link to='/signup'><Button>Sign Up</Button></Link>
+      </Form>
+    );
   }
+}
